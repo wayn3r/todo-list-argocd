@@ -1,0 +1,48 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: todo-list
+  namespace: argocd
+spec:
+  # Project description
+  description: Todo List Web application
+
+  # Allow manifests to deploy from any Git repos
+  sourceRepos:
+  - https://github.com/wayn3r/todo-list-argocd
+
+  destinations:
+  - namespace: todo-list-app
+    server: https://kubernetes.default.svc
+    name: in-cluster
+
+  # Deny all cluster-scoped resources from being created, except for Namespace
+  clusterResourceWhitelist:
+  - group: ''
+    kind: Namespace
+
+  # Allow all namespaced-scoped resources to be created, except for ResourceQuota, LimitRange, NetworkPolicy
+  namespaceResourceBlacklist:
+  - group: ''
+    kind: ResourceQuota
+  - group: ''
+    kind: LimitRange
+  - group: ''
+    kind: NetworkPolicy
+
+  # Deny all namespaced-scoped resources from being created, except for Deployment, StatefulSet, Services
+  # namespaceResourceWhitelist: []
+  # - group: 'apps'
+  #   kind: Deployment
+  # - group: 'apps'
+  #   kind: StatefulSet
+  # - group: ''
+  #   kind: Service
+  # - group: ''
+  #   kind: Pod
+  # - group: 'apps'
+  #   kind: ReplicaSet
+  
+  # Enables namespace orphaned resource monitoring.
+  orphanedResources:
+    warn: true

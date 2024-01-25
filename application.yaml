@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: todo-list-app
+  namespace: argocd
+spec:
+  project: todo-list
+  source:
+    repoURL: 'https://github.com/wayn3r/todo-list-argocd'
+    path: todo-list
+    targetRevision: HEAD
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: todo-list-app
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
