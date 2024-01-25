@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: todo-list
-        image: wayn3r/todo-list:66370f81ff3c4a4c8922001188ee7b7cdcdc725d
+        image: wayn3r/todo-list:db042a4afc7bc6b865fa82e21f9f5bb42c0807ac
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 3000
