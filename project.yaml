@@ -44,5 +44,5 @@ spec:
   #   kind: ReplicaSet
   
   # Enables namespace orphaned resource monitoring.
-  orphanedResources:
-    warn: true
+    # orphanedResources:
+    #   warn: true
