@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: todo-list-review
+  name: todo-list-preview
   namespace: argocd
 spec:
   generators:
@@ -17,14 +17,14 @@ spec:
       name: todo-list-{{branch}}-{{number}}
       name: argocd
     spec:
-      project: todo-list-reviews
+      project: todo-list-previews
       source:
         repoURL: 'https://github.com/wayn3r/todo-list-argocd'
-        path: 'todo-list-reviews/{{head_sha}}'
+        path: 'todo-list-previews/{{head_sha}}'
         targetRevision: HEAD
       destination:
         server: 'https://kubernetes.default.svc'
-        namespace: todo-list-{{branch}}-{{number}}
+        namespace: preview-todo-list-{{branch}}-{{number}}
       syncPolicy:
         automated:
           selfHeal: true
