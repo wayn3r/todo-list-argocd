@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: todo-list-review
+  namespace: argocd
+spec:
+  generators:
+  - pullRequest:
+      github:
+        owner: wayn3r
+        repo: todo-list
+        labels:
+        - preview
+      requeueAfterSeconds: 60
+  template:
+    metadata:
+      name: todo-list-{{branch}}-{{number}}
+      name: argocd
+    spec:
+      project: todo-list-reviews
+      source:
+        repoURL: 'https://github.com/wayn3r/todo-list-argocd'
+        path: 'todo-list-reviews/{{head_sha}}'
+        targetRevision: HEAD
+      destination:
+        server: 'https://kubernetes.default.svc'
+        namespace: todo-list-{{branch}}-{{number}}
+      syncPolicy:
+        automated:
+          selfHeal: true
+          prune: true
+        syncOptions:
+          - CreateNamespace=true
