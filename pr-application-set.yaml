@@ -9,13 +9,16 @@ spec:
       github:
         owner: wayn3r
         repo: todo-list
+        tokenRef:
+          secretName: github-token
+          key: token
         labels:
         - preview
       requeueAfterSeconds: 60
   template:
     metadata:
-      name: todo-list-{{branch}}-{{number}}
-      name: argocd
+      name: todo-list-{{branch_slug}}-{{number}}
+      namespace: argocd
     spec:
       project: todo-list-previews
       source:
@@ -24,7 +27,7 @@ spec:
         targetRevision: HEAD
       destination:
         server: 'https://kubernetes.default.svc'
-        namespace: preview-todo-list-{{branch}}-{{number}}
+        namespace: preview-todo-list-{{branch_slug}}-{{number}}
       syncPolicy:
         automated:
           selfHeal: true
