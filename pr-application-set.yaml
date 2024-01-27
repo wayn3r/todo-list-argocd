@@ -23,7 +23,7 @@ spec:
       project: todo-list-previews
       source:
         repoURL: 'https://github.com/wayn3r/todo-list-argocd'
-        path: 'todo-list-previews/{{head_sha}}'
+        path: 'todo-list-previews/{{number}}/{{head_sha}}'
         targetRevision: HEAD
       destination:
         server: 'https://kubernetes.default.svc'
