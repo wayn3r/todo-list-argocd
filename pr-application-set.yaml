@@ -28,7 +28,7 @@ spec:
         kustomize:
           nameSuffix: "{{branch_slug}}"
           commonLabels:
-            app.kubernetes.io/instance: '{{branch}}-{{number}}'
+            app.kubernetes.io/instance: '{{branch_slug}}-{{number}}'
           images:
           - wayn3r/todo-list-preview:{{head_sha}}
       destination:
