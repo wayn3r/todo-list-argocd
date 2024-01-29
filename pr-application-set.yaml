@@ -23,8 +23,14 @@ spec:
       project: todo-list-previews
       source:
         repoURL: 'https://github.com/wayn3r/todo-list-argocd'
-        path: 'todo-list-previews/{{number}}/{{head_sha}}'
+        path: 'todo-list-previews'
         targetRevision: HEAD
+        kustomize:
+          nameSuffix: "{{branch_slug}}"
+          commonLabels:
+            app.kubernetes.io/instance: '{{branch}}-{{number}}'
+          images:
+          - wayn3r/todo-list-preview:{{head_sha}}
       destination:
         server: 'https://kubernetes.default.svc'
         namespace: preview-todo-list-{{branch_slug}}-{{number}}
